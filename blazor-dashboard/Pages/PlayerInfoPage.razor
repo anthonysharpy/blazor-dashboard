@@ -17,13 +17,13 @@
 
 @code {
 	[Parameter]
-	public Func<Player>? GetPlayer { get; set; }
+	public long? PlayerSteamID { get; set; }
 
 	private Player? OurPlayer { get; set; }
 
 	protected override void OnParametersSet()
 	{
-		OurPlayer = GetPlayer?.Invoke();
+		OurPlayer = PretendDatabase.GetPlayers().SingleOrDefault(x => x.SteamID == PlayerSteamID);
 	}
 
 	private void BanPlayer()

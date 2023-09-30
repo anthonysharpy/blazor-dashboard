@@ -36,7 +36,7 @@
 							PageType="typeof(PlayerInfoPage)"
 							PageParameters="@(new()
 								{
-									{ "GetPlayer", () => PretendDatabase.GetPlayers().SingleOrDefault(x => x.SteamID == player.SteamID ) }
+									{ "PlayerSteamID", player.SteamID }
 								})">
 						</PageLink>
 					</td>
@@ -55,13 +55,13 @@
 
 @code {
 	[Parameter]
-	public Func<Server>? GetServer { get; set; }
+	public long ServerSteamID { get; set; }
 
 	private Server? OurServer { get; set; }
 
 	protected override void OnParametersSet()
 	{
-		OurServer = GetServer?.Invoke();
+		OurServer = PretendDatabase.GetServers().SingleOrDefault(x => x.SteamID == ServerSteamID);
 	}
 
 	private void KickPlayer(Server server, Player player)

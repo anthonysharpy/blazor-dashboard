@@ -23,10 +23,7 @@
 					<PageLink
 						ChildContent="@server.ServerName"
 						PageType="typeof(ServerInfoPage)"
-						PageParameters="@(new()
-						{
-							{ "GetServer", () => PretendDatabase.GetServers().SingleOrDefault(x => x.SteamID == server.SteamID ) }
-						})">
+						PageParameters="@(new() { { "ServerSteamID", server.SteamID } })">
 					</PageLink>
 				</td>
 				<td>@server.CurrentGame</td>
@@ -40,13 +37,10 @@
 </table>
 
 @code {
-	[Parameter]
-	public Func<List<Server>>? GetServers { get; set; }
-
 	private List<Server> Servers { get; set; } = new();
 
 	protected override void OnParametersSet()
 	{
-		Servers = GetServers?.Invoke();
+		Servers = PretendDatabase.GetServers();
 	}
 }

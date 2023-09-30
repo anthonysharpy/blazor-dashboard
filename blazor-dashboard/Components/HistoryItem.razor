@@ -2,7 +2,11 @@
 
 @if (State != null && PageStateReference != null)
 {
-	<div class="history-item @(State.ActivePage == PageStateReference ? "active" : "")" @onclick=@(() => State.SetPage(PageStateReference))>
+	<div 
+		@onmouseleave="OnMouseLeave"
+		@onmouseover="OnMouseOver" 
+		class="history-item @(State.ActivePage == PageStateReference ? "active" : "")" 
+		@onclick=@(() => State.SetPage(PageStateReference))>
 		<div class="text-container">@ChildContent</div>
 		<div class="arrow-container">></div>
 	</div>
@@ -10,10 +14,14 @@
 
 @code {
 	[Parameter]
-	public RenderFragment? ChildContent { get; set; }
+	public string? ChildContent { get; set; }
 
 	[Parameter]
 	public PageState? PageStateReference { get; set; }
+
+	[Parameter] public EventCallback<MouseEventArgs> OnMouseLeave { get; set; }
+
+	[Parameter] public EventCallback<MouseEventArgs> OnMouseOver { get; set; }
 
 	[CascadingParameter]
 	public SiteState? State { get; set; }

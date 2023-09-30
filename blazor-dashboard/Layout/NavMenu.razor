@@ -1,37 +1,51 @@
 ﻿@namespace blazor_dashboard
 
-<div class="navigation">
-    <NavItem 
+@if (State != null)
+{
+    <div class="navigation">
+        <NavItem 
         PageComponentType="typeof(HomePage)"
         ChildContent="Home">
-    </NavItem>
-    <NavItem 
+        </NavItem>
+        <NavItem 
         PageComponentType="typeof(PlayersPage)"
-        PageParameters="@(new()
-		{
-			{ "GetPlayers", () => PretendDatabase.GetPlayers() }
-		})"
         ChildContent="Players">
-    </NavItem>
-    <NavItem
+        </NavItem>
+        <NavItem
         PageComponentType="typeof(ServersPage)"
-        PageParameters="@(new()
-		{
-			{ "GetServers", () => PretendDatabase.GetServers() }
-		})"
         ChildContent="Servers">
-    </NavItem>
-</div>
-<div class="history-container">
-    @foreach(var historyItem in State?.History ?? new())
+        </NavItem>
+    </div>
+    <div class="history-container">
+        @foreach (var historyItem in State.History ?? new())
+        {
+            <HistoryItem
+                ChildContent="@historyItem.PageType?.Name"
+                PageStateReference="@historyItem"
+                OnMouseLeave="@(() => ClearPagePreview())"
+                OnMouseOver="@(() => SetPageBeingPreviewed(historyItem))">
+            </HistoryItem>
+        }
+    </div>
+
+    @if(_pageBeingPreviewed != null && _pageBeingPreviewed != State.ActivePage)
     {
-        <HistoryItem PageStateReference="@historyItem">@historyItem.PageType.Name</HistoryItem>
+        <div class="history-preview">
+            <div class="history-preview-content">
+                <DynamicComponent 
+                    Type="@_pageBeingPreviewed.PageType"
+                    Parameters="@_pageBeingPreviewed.PageParameters">
+                </DynamicComponent>
+            </div>
+        </div>
     }
-</div>
+}
 
 @code {
     [CascadingParameter]
     public SiteState? State { get; set; }
+
+    private PageState? _pageBeingPreviewed { get; set; }
 
     protected override void OnParametersSet()
     {
@@ -39,5 +53,15 @@
             throw new Exception("invalid State during OnParametersSet");
 
         State.SubscribeToStateChange(() => StateHasChanged());
+    }
+
+    private void SetPageBeingPreviewed(PageState pageState)
+    {
+        _pageBeingPreviewed = pageState;
+    }
+
+    private void ClearPagePreview()
+    {
+        _pageBeingPreviewed = null;
     }
 }

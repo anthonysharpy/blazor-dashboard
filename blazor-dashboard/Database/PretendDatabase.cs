@@ -60,6 +60,8 @@ public class PretendDatabase
         },
     };
 
+    private static List<string> _eventLog = new();
+
     public static void UpsertServer(Server server)
     {
         _servers = _servers.Where(x => x.SteamID != server.SteamID).ToList();
@@ -97,5 +99,15 @@ public class PretendDatabase
     public static List<Player> GetPlayers()
     {
         return _players.Select(x => x.Clone()).ToList();
+    }
+
+    public static void LogEvent(string eventString)
+    {
+        _eventLog.Add(eventString);
+    }
+
+    public static List<string> GetEventLog()
+    {
+        return new List<string>(_eventLog);
     }
 }

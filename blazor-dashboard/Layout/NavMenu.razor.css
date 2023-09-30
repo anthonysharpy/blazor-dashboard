@@ -13,3 +13,22 @@
     box-shadow: 0 0.4em 1em -0.4em rgba(0, 0, 0, 0.5);
     background-color: white;
 }
+
+.history-preview {
+    border: dashed black 0.2em;
+    position: fixed;
+    background-color: white;
+    margin: auto;
+    padding: 1em;
+    width: 40vw;
+    height: 22.5vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0.4em 0.4em 0.7em rgba(0, 0, 0, 0.5);
+}
+
+.history-preview-content {
+    zoom: 25%;
+    pointer-events: none;
+}

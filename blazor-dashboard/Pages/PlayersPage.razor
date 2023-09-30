@@ -24,7 +24,7 @@
 						PageType="typeof(PlayerInfoPage)"
 						PageParameters="@(new()
 						{ 
-							{ "GetPlayer", () => PretendDatabase.GetPlayers().SingleOrDefault(x => x.SteamID == player.SteamID ) }
+							{ "PlayerSteamID", player.SteamID }
 						})">
 					</PageLink>
 				</td>
@@ -38,13 +38,10 @@
 </table>
 
 @code {
-	[Parameter]
-	public Func<List<Player>>? GetPlayers { get; set; }
-
 	private List<Player> Players { get; set; } = new();
 
 	protected override void OnParametersSet()
 	{
-		Players = GetPlayers?.Invoke() ?? new();
+		Players = PretendDatabase.GetPlayers();
 	}
 }
