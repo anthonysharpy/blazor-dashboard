@@ -2,11 +2,16 @@
 
 public class Player
 {
-    public string SteamName { get; set; }
+    public string? SteamName { get; set; }
     public long SteamID { get; set; }
     public bool IsBanned { get; set; }
     public TimeSpan PlayTime { get; set; }
-    public string LastKnownIPv4 { get; set; }
+    public string? LastKnownIPv4 { get; set; }
+
+    public string GetFormattedPlayTime()
+    {
+		return $"{Math.Floor(PlayTime.TotalHours)}hr {PlayTime.Minutes}min";
+	}
 
     public Player Clone()
     {

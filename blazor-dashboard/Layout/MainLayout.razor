@@ -1,0 +1,7 @@
+﻿@namespace blazor_dashboard
+@inherits LayoutComponentBase
+@inject SiteState State;
+
+<CascadingValue Value="@State">
+	<PageRenderer></PageRenderer>
+</CascadingValue>

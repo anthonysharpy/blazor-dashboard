@@ -1,0 +1,30 @@
+﻿@namespace blazor_dashboard
+
+@if (State != null && PageComponentType != null)
+{
+	<div @onclick="() => State.SetPage(PageComponentType, PageParameters)" class="navigation-item @(State.ActivePage.PageType.Name == PageComponentType.Name ? "active" : "")">
+		<a>@ChildContent</a>
+	</div>
+}
+
+@code {
+	[Parameter]
+	public string? ChildContent { get; set; }
+
+	[Parameter]
+	public Type? PageComponentType { get; set; }
+
+	[Parameter]
+	public Dictionary<string, object> PageParameters { get; set; } = new();
+
+	[CascadingParameter]
+	public SiteState? State { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		if (State == null)
+			throw new Exception("invalid State during OnParametersSet");
+
+		State.SubscribeToStateChange(() => StateHasChanged());
+	}
+}

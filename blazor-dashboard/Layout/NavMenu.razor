@@ -1,0 +1,43 @@
+﻿@namespace blazor_dashboard
+
+<div class="navigation">
+    <NavItem 
+        PageComponentType="typeof(HomePage)"
+        ChildContent="Home">
+    </NavItem>
+    <NavItem 
+        PageComponentType="typeof(PlayersPage)"
+        PageParameters="@(new()
+		{
+			{ "GetPlayers", () => PretendDatabase.GetPlayers() }
+		})"
+        ChildContent="Players">
+    </NavItem>
+    <NavItem
+        PageComponentType="typeof(ServersPage)"
+        PageParameters="@(new()
+		{
+			{ "GetServers", () => PretendDatabase.GetServers() }
+		})"
+        ChildContent="Servers">
+    </NavItem>
+</div>
+<div class="history-container">
+    @foreach(var historyItem in State?.History ?? new())
+    {
+        <HistoryItem PageStateReference="@historyItem">@historyItem.PageType.Name</HistoryItem>
+    }
+</div>
+
+@code {
+    [CascadingParameter]
+    public SiteState? State { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (State == null)
+            throw new Exception("invalid State during OnParametersSet");
+
+        State.SubscribeToStateChange(() => StateHasChanged());
+    }
+}

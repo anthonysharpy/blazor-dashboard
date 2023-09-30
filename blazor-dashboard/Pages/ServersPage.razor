@@ -1,0 +1,52 @@
+﻿@namespace blazor_dashboard
+
+<h1>Servers</h1>
+
+<p>This page shows currently active servers.</p>
+
+<table>
+	<thead>
+		<tr>
+			<th>Server Name</th>
+			<th>Game</th>
+			<th>Player Count</th>
+			<th>Uptime</th>
+			<th>Ping</th>
+			<th>Steam ID</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var server in Servers)
+		{
+			<tr>
+				<td>
+					<PageLink
+						ChildContent="@server.ServerName"
+						PageType="typeof(ServerInfoPage)"
+						PageParameters="@(new()
+						{
+							{ "GetServer", () => PretendDatabase.GetServers().SingleOrDefault(x => x.SteamID == server.SteamID ) }
+						})">
+					</PageLink>
+				</td>
+				<td>@server.CurrentGame</td>
+				<td>@($"{@server.Players.Count()}/{server.MaxPlayers}")</td>
+				<td>@server.GetFormattedUptime()</td>
+				<td>@server.Ping</td>
+				<td>@server.SteamID</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+	[Parameter]
+	public Func<List<Server>>? GetServers { get; set; }
+
+	private List<Server> Servers { get; set; } = new();
+
+	protected override void OnParametersSet()
+	{
+		Servers = GetServers?.Invoke();
+	}
+}

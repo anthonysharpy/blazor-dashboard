@@ -1,0 +1,20 @@
+.history-item {
+    display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    background-color: rgb(220, 220, 220);
+}
+
+.history-item.active {
+    background-color: rgb(117, 197, 255);
+}
+
+.history-item:hover {
+    cursor: pointer;
+}
+
+.arrow-container {
+    margin-left: 1em;
+}

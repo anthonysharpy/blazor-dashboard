@@ -1,0 +1,25 @@
+.navigation-item {
+    padding: 2em;
+    text-decoration: none;
+    background-color: rgb(117, 197, 255);
+}
+
+.navigation-item a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navigation-item:hover {
+    cursor: pointer;
+    filter: brightness(105%);
+}
+
+.navigation-item:first-of-type {
+}
+
+.navigation-item.active {
+    filter: brightness(105%);
+    transform:translate(0, -0.1em);
+    color: rgb(238, 238, 238);
+}

@@ -17,11 +17,20 @@ table {
 }
 
 td, th {
-    border: solid black 0.1em;
+    border: solid rgb(100, 100, 100) 0.1em;
     padding: 0.4em;
+}
+
+.td-centered {
+    text-align: center;
+    vertical-align: middle;
 }
 
 th {
     background-color: rgb(117, 197, 255);
     color: white;
+}
+
+h2 {
+    font-size: 1.2em;
 }

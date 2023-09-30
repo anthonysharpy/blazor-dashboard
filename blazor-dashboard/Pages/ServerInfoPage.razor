@@ -1,0 +1,72 @@
+﻿@namespace blazor_dashboard
+
+<h1>Server Info</h1>
+
+@if (OurServer != null)
+{
+	<ul>
+		<li><b>Server Name:</b> @OurServer.ServerName</li>
+		<li><b>Game:</b> @OurServer.CurrentGame</li>
+		<li><b>Player Count:</b> @OurServer.Players.Count()</li>
+		<li><b>Uptime:</b> @OurServer.GetFormattedUptime()</li>
+		<li><b>Ping:</b> @OurServer.Ping</li>
+		<li><b>Steam ID:</b> @OurServer.SteamID</li>
+	</ul>
+
+	<h2>Players</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Player Name</th>
+				<th>Steam ID</th>
+				<th>Play Time</th>
+				<th>Is Banned</th>
+				<th>Last Known IPv4</th>
+				<th>Kick Player</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var player in OurServer.Players)
+			{
+				<tr>
+					<td>
+						<PageLink
+							ChildContent="@player.SteamName"
+							PageType="typeof(PlayerInfoPage)"
+							PageParameters="@(new()
+								{
+									{ "GetPlayer", () => PretendDatabase.GetPlayers().SingleOrDefault(x => x.SteamID == player.SteamID ) }
+								})">
+						</PageLink>
+					</td>
+					<td>@player.SteamID</td>
+					<td>@player.GetFormattedPlayTime()</td>
+					<td>@player.IsBanned</td>
+					<td>@player.LastKnownIPv4</td>
+					<td class="td-centered">
+						<button @onclick="@(() => KickPlayer(OurServer, player))">Kick</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	[Parameter]
+	public Func<Server>? GetServer { get; set; }
+
+	private Server? OurServer { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		OurServer = GetServer?.Invoke();
+	}
+
+	private void KickPlayer(Server server, Player player)
+	{
+		server.Players.Remove(player);
+		PretendDatabase.UpsertServer(server);
+	}
+}

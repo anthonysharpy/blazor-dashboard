@@ -1,0 +1,34 @@
+﻿@namespace blazor_dashboard
+
+<h1>Player Info</h1>
+
+@if (OurPlayer != null)
+{
+	<ul>
+		<li><b>Player Name:</b> @OurPlayer.SteamName</li>
+		<li><b>Steam ID:</b> @OurPlayer.SteamID</li>
+		<li><b>Play Time:</b> @OurPlayer.GetFormattedPlayTime()</li>
+		<li><b>Is Banned:</b> @OurPlayer.IsBanned</li>
+		<li><b>Last Known IPv4:</b> @OurPlayer.LastKnownIPv4</li>
+	</ul>
+
+	<button @onclick="@(() => BanPlayer())">Ban Player</button>
+}
+
+@code {
+	[Parameter]
+	public Func<Player>? GetPlayer { get; set; }
+
+	private Player? OurPlayer { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		OurPlayer = GetPlayer?.Invoke();
+	}
+
+	private void BanPlayer()
+	{
+		OurPlayer.IsBanned = true;
+		PretendDatabase.UpsertPlayer(OurPlayer);
+	}
+}

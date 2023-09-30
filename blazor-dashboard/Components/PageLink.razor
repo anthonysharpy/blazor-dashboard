@@ -1,0 +1,25 @@
+﻿@namespace blazor_dashboard
+
+@if (State != null && PageParameters != null && PageType != null)
+{
+	<a class="page-link" @onclick="() => State.SetPage(PageType, PageParameters)">@ChildContent</a>
+}
+
+@code {
+	[Parameter]
+	public string? ChildContent { get; set; }
+
+	[Parameter]
+	public Type? PageType { get; set; }
+
+	/// <summary>
+	/// The parameters for this page. It is better to pass in a function that
+	/// returns the data, rather than the data itself, because this will ensure
+	/// that the data stays up-to-date with any changes.
+	/// </summary>
+	[Parameter]
+	public Dictionary<string, object>? PageParameters { get; set; }
+
+	[CascadingParameter]
+	private SiteState? State { get; set; }
+}

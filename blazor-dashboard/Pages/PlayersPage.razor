@@ -1,0 +1,50 @@
+﻿@namespace blazor_dashboard
+
+<h1>Players</h1>
+
+<p>This page shows currently online players.</p>
+
+<table>
+	<thead>
+		<tr>
+			<th>Player Name</th>
+			<th>Steam ID</th>
+			<th>Play Time</th>
+			<th>Is Banned</th>
+			<th>Last Known IPv4</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var player in PretendDatabase.GetPlayers())
+		{
+			<tr>
+				<td>
+					<PageLink
+						ChildContent="@player.SteamName"
+						PageType="typeof(PlayerInfoPage)"
+						PageParameters="@(new()
+						{ 
+							{ "GetPlayer", () => PretendDatabase.GetPlayers().SingleOrDefault(x => x.SteamID == player.SteamID ) }
+						})">
+					</PageLink>
+				</td>
+				<td>@player.SteamID</td>
+				<td>@player.GetFormattedPlayTime()</td>
+				<td>@player.IsBanned</td>
+				<td>@player.LastKnownIPv4</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+	[Parameter]
+	public Func<List<Player>>? GetPlayers { get; set; }
+
+	private List<Player> Players { get; set; } = new();
+
+	protected override void OnParametersSet()
+	{
+		Players = GetPlayers?.Invoke() ?? new();
+	}
+}

@@ -1,0 +1,29 @@
+﻿@namespace blazor_dashboard
+
+@if (State != null)
+{
+	<div class="navigation">
+		<NavMenu />
+	</div>
+	<div class="page">
+		<main>
+			<DynamicComponent 
+				Type="@State.ActivePage.PageType"
+				Parameters="@State.ActivePage.PageParameters">
+			</DynamicComponent>
+		</main>
+	</div>
+}
+
+@code {
+	[CascadingParameter]
+	public SiteState? State { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		if (State == null)
+			throw new Exception("invalid State during OnParametersSet");
+
+		State.SubscribeToStateChange(() => StateHasChanged());
+	}
+}

@@ -1,4 +1,4 @@
-﻿using blazor_dashboard.Pages;
+﻿using Microsoft.AspNetCore.Hosting.Server;
 
 namespace blazor_dashboard;
 
@@ -31,6 +31,7 @@ public class PretendDatabase
         new Server
         {
             ServerName = "Cool kidz server",
+            SteamID = 1251675335222,
             CurrentGame = "Call Of Doody",
             Ping = 84,
             MaxPlayers = 24,
@@ -40,6 +41,7 @@ public class PretendDatabase
         new Server
         {
             ServerName = "OMG DONT JOIN!!",
+            SteamID = 1253235335454,
             CurrentGame = "Burp Heroes",
             Ping = 122,
             MaxPlayers = 1,
@@ -49,25 +51,42 @@ public class PretendDatabase
         new Server
         {
             ServerName = "[OFFICIAL] Gamer Gang",
+            SteamID = 1253521798774,
             CurrentGame = "Gamer Chair Simulator",
-            Ping = 84,
+            Ping = 21,
             MaxPlayers = 8,
-            StartTime = DateTime.Now.AddMinutes(-30),
+            StartTime = DateTime.Now.AddMinutes(-622),
             Players = new(){ _players[5], _players[6], _players[7], _players[8] }
         },
     };
 
     public static void UpsertServer(Server server)
     {
+        _servers = _servers.Where(x => x.SteamID != server.SteamID).ToList();
+
         // Clone everything going in and out of this fake database, because if
         // we pass references and they get edited, this could cause some weird
         // behaviour. Obviously, this wouldn't be the case with a real database.
         _servers.Add(server.Clone());
     }
 
-    public static void UpsertServer(Player player)
+    public static void UpsertPlayer(Player player)
     {
-        _players.Add(player.Clone());
+        var clonedPlayer = player.Clone();
+
+		_players = _players.Where(x => x.SteamID != player.SteamID).ToList();
+		_players.Add(clonedPlayer);
+
+        // Also need to update the players in the server objects. This would
+        // never happen with a real database, it's just because we are being
+        // awkard and faking it.
+        var serverPlayerIsIn = _servers.SingleOrDefault(x => x.Players.Any(p => p.SteamID == player.SteamID));
+
+        if (serverPlayerIsIn != null) 
+        {
+            serverPlayerIsIn.Players = serverPlayerIsIn.Players.Where(x => x.SteamID != player.SteamID).ToList();
+            serverPlayerIsIn.Players.Add(clonedPlayer);
+        }
     }
 
     public static List<Server> GetServers()
