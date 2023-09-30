@@ -1,0 +1,37 @@
+﻿@page "/servers"
+
+<PageTitle>Servers</PageTitle>
+
+<h1>Servers</h1>
+
+<p>This page shows currently active servers.</p>
+
+<table>
+	<thead>
+		<tr>
+			<th>Server Name</th>
+			<th>Game</th>
+			<th>Player Count</th>
+			<th>Uptime</th>
+			<th>Ping</th>
+			<th>Steam ID</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var server in PretendDatabase.GetServers())
+		{
+			<tr>
+				<td>@server.ServerName</td>
+				<td>@server.CurrentGame</td>
+				<td>@($"{@server.Players.Count()}/{server.MaxPlayers}")</td>
+				<td>@($"{Math.Floor(server.GetUptime().TotalHours)}hr {server.GetUptime().Minutes}min")</td>
+				<td>@server.Ping</td>
+				<td>@server.SteamID</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+
+}

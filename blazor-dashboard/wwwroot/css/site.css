@@ -1,0 +1,27 @@
+* {
+    color: black;
+    font-family: 'Noto Sans';
+}
+
+body {
+    margin: 0;
+}
+
+.page {
+    padding: 1em 3em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: solid black 0.1em;
+    padding: 0.4em;
+}
+
+th {
+    background-color: rgb(117, 197, 255);
+    color: white;
+}
