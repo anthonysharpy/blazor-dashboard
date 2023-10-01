@@ -3,4 +3,4 @@ An example Blazor Server dashboard I wrote.
 
 ## How To Run
 
-Run `dotnet watch` from a terminal in the blazor-dashboard directory. Probably request .NET 7.
+Run `dotnet watch` from a terminal in the blazor-dashboard directory. Probably requires .NET 7.
