@@ -53,9 +53,9 @@ footer {
 button {
     background-color: rgb(128, 202, 255);
     font-size: 1em;
-    border-radius: 0.5em;
+    border-radius: 2.5em;
     border: solid #0000004d 0.1em;
-    padding: 0.75em 1.5em;
+    padding: 0.5em 1.5em;
     box-shadow: 0.1em 0.1em 0.2em 0em #00000059;
 }
 

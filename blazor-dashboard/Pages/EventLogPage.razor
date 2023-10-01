@@ -12,7 +12,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach(var log in EventLogEntries)
+		@foreach(var log in _eventLogEntries)
 		{
 			<tr>
 				<td style="width: 15em; text-align: center;">@log.EventTime.ToString("dd/MM/yyyy HH:mm")</td>
@@ -23,11 +23,11 @@
 </table>
 
 @code {
-	private List<EventLogEntry> EventLogEntries { get; set; } = new();
+	private List<EventLogEntry> _eventLogEntries = new();
 
 	protected override void OnParametersSet()
 	{
-		EventLogEntries = PretendDatabase.GetEventLogs()
+		_eventLogEntries = PretendDatabase.GetEventLogs()
 			.OrderByDescending(x => x.EventTime)
 			.ToList();
 	}

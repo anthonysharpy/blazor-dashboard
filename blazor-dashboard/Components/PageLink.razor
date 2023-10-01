@@ -15,11 +15,6 @@
 	[Parameter]
 	public string? PageName { get; set; }
 
-	/// <summary>
-	/// The parameters for this page. It is better to pass in a function that
-	/// returns the data, rather than the data itself, because this will ensure
-	/// that the data stays up-to-date with any changes.
-	/// </summary>
 	[Parameter]
 	public Dictionary<string, object>? PageParameters { get; set; }
 

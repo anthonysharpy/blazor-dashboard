@@ -7,25 +7,25 @@ public class SiteState
 {
 	private const int MAX_HISTORY_LENGTH = 10;
 
-	/// <summary>
-	/// The page we are looking at in the browsing history (the nth element
-	/// of History).
-	/// </summary>
-	public int HistoryIndex { get; set; } = 0;
+	public PageState ActivePage { get; set; }
 
 	/// <summary>
 	/// Our browsing history. The list has a maxmimum size; if the history length exceeds this,
 	/// old history is removed.
 	/// </summary>
-	public List<PageState> History { get; set; } = new();
+	public List<PageState> History { get; private set; } = new();
 
-	public PageState ActivePage { get; set; }
+	/// <summary>
+	/// The page we are looking at in the browsing history (the nth element
+	/// of _history).
+	/// </summary>
+	private int _historyIndex = 0;
 
 	/// <summary>
 	/// Components can register a callback function that will be called
 	/// when the state changes. This helps them know when to refresh.
 	/// </summary>
-	private List<Action> OnStateChangedActions { get; set; } = new();
+	private List<Action> _onStateChangedActions { get; set; } = new();
 
 	public SiteState()
 	{
@@ -53,13 +53,11 @@ public class SiteState
             return;
         }
 
-        History.Add(pageState);
+		History.Add(pageState);
         SetActivePage(pageState);
 
         if (History.Count > MAX_HISTORY_LENGTH)
-        {
-            History.RemoveAt(0);
-        }
+			History.RemoveAt(0);
 
         StateHasChanged();
     }
@@ -82,15 +80,15 @@ public class SiteState
 		if (!History.Any(x => x == pageState))
 			throw new Exception("no such PageState in History when attempting to set active page");
 
-		HistoryIndex = History.IndexOf(pageState);
-		ActivePage = History[HistoryIndex];
+		_historyIndex = History.IndexOf(pageState);
+		ActivePage = History[_historyIndex];
 
 		StateHasChanged();
 	}
 
 	public void SubscribeToStateChange(Action onStateChangeAction)
 	{
-		OnStateChangedActions.Add(onStateChangeAction);
+		_onStateChangedActions.Add(onStateChangeAction);
 	}
 
 	/// <summary>
@@ -99,9 +97,7 @@ public class SiteState
 	/// </summary>
 	private void StateHasChanged()
 	{
-		foreach(var action in OnStateChangedActions)
-		{
+		foreach (var action in _onStateChangedActions)
 			action.Invoke();
-		}
 	}
 }

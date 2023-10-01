@@ -2,14 +2,14 @@
 
 <h1>Player Info</h1>
 
-@if (OurPlayer != null)
+@if (_ourPlayer != null)
 {
 	<ul>
-		<li><b>Player Name:</b> @OurPlayer.SteamName</li>
-		<li><b>Steam ID:</b> @OurPlayer.SteamID</li>
-		<li><b>Play Time:</b> @OurPlayer.GetFormattedPlayTime()</li>
-		<li><b>Is Banned:</b> @OurPlayer.IsBanned</li>
-		<li><b>Last Known IPv4:</b> @OurPlayer.LastKnownIPv4</li>
+		<li><b>Player Name:</b> @_ourPlayer.SteamName</li>
+		<li><b>Steam ID:</b> @_ourPlayer.SteamID</li>
+		<li><b>Play Time:</b> @_ourPlayer.GetFormattedPlayTime()</li>
+		<li><b>Is Banned:</b> @_ourPlayer.IsBanned</li>
+		<li><b>Last Known IPv4:</b> @_ourPlayer.LastKnownIPv4</li>
 	</ul>
 
 	<button @onclick="@(() => BanPlayer())">Ban Player</button>
@@ -19,20 +19,20 @@
 	[Parameter]
 	public long? PlayerSteamID { get; set; }
 
-	private Player? OurPlayer { get; set; }
+	private Player? _ourPlayer;
 
 	protected override void OnParametersSet()
 	{
-		OurPlayer = PretendDatabase.GetPlayers().SingleOrDefault(x => x.SteamID == PlayerSteamID);
+		_ourPlayer = PretendDatabase.GetPlayers().SingleOrDefault(x => x.SteamID == PlayerSteamID);
 	}
 
 	private void BanPlayer()
 	{
-		if (OurPlayer?.IsBanned ?? true)
+		if (_ourPlayer?.IsBanned ?? true)
 			return;
 
-		OurPlayer.IsBanned = true;
-		PretendDatabase.UpsertPlayer(OurPlayer);
-		LoggingHelpers.LogEvent($"User with Steam ID {OurPlayer.SteamID} was banned");
+		_ourPlayer.IsBanned = true;
+		PretendDatabase.UpsertPlayer(_ourPlayer);
+		LoggingHelpers.LogEvent($"User with Steam ID {_ourPlayer.SteamID} was banned");
 	}
 }

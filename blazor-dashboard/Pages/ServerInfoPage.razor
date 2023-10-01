@@ -2,15 +2,15 @@
 
 <h1>Server Info</h1>
 
-@if (OurServer != null)
+@if (_ourServer != null)
 {
 	<ul>
-		<li><b>Server Name:</b> @OurServer.ServerName</li>
-		<li><b>Game:</b> @OurServer.CurrentGame</li>
-		<li><b>Player Count:</b> @OurServer.Players.Count()</li>
-		<li><b>Uptime:</b> @OurServer.GetFormattedUptime()</li>
-		<li><b>Ping:</b> @OurServer.Ping</li>
-		<li><b>Steam ID:</b> @OurServer.SteamID</li>
+		<li><b>Server Name:</b> @_ourServer.ServerName</li>
+		<li><b>Game:</b> @_ourServer.CurrentGame</li>
+		<li><b>Player Count:</b> @_ourServer.Players.Count()</li>
+		<li><b>Uptime:</b> @_ourServer.GetFormattedUptime()</li>
+		<li><b>Ping:</b> @_ourServer.Ping</li>
+		<li><b>Steam ID:</b> @_ourServer.SteamID</li>
 	</ul>
 
 	<h2>Players</h2>
@@ -27,7 +27,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var player in OurServer.Players)
+			@foreach (var player in _ourServer.Players)
 			{
 				<tr>
 					<td>
@@ -46,7 +46,7 @@
 					<td>@player.IsBanned</td>
 					<td>@player.LastKnownIPv4</td>
 					<td class="td-centered">
-						<button @onclick="@(() => KickPlayer(OurServer, player))">Kick</button>
+						<button @onclick="@(() => KickPlayer(_ourServer, player))">Kick</button>
 					</td>
 				</tr>
 			}
@@ -58,11 +58,11 @@
 	[Parameter]
 	public long ServerSteamID { get; set; }
 
-	private Server? OurServer { get; set; }
+	private Server? _ourServer;
 
 	protected override void OnParametersSet()
 	{
-		OurServer = PretendDatabase.GetServers().SingleOrDefault(x => x.SteamID == ServerSteamID);
+		_ourServer = PretendDatabase.GetServers().SingleOrDefault(x => x.SteamID == ServerSteamID);
 	}
 
 	private void KickPlayer(Server server, Player player)

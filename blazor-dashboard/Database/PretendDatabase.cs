@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
-
-namespace blazor_dashboard;
+﻿namespace blazor_dashboard;
 
 /// <summary>
 /// This is definitely not how you would actually set up the database!
@@ -9,7 +7,7 @@ namespace blazor_dashboard;
 /// 
 /// My personal preference would be to go with Dapper because of its speed and
 /// lesser chances of shooting yourself in the foot, but Entity Framework is
-/// probably more common so you could just as well use that too.
+/// probably more popular so you could just as well use that too.
 /// </summary>
 public class PretendDatabase
 {

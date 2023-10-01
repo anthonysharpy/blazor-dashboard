@@ -19,12 +19,14 @@
 	[Parameter]
 	public PageState? PageStateReference { get; set; }
 
-	[Parameter] public EventCallback<MouseEventArgs> OnMouseLeave { get; set; }
+	[Parameter]
+	public EventCallback<MouseEventArgs> OnMouseLeave { get; set; }
 
-	[Parameter] public EventCallback<MouseEventArgs> OnMouseOver { get; set; }
+	[Parameter]
+	public EventCallback<MouseEventArgs> OnMouseOver { get; set; }
 
 	[CascadingParameter]
-	public SiteState? State { get; set; }
+	private SiteState? State { get; set; }
 
 	protected override void OnParametersSet()
 	{

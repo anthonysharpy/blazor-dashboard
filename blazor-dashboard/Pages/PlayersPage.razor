@@ -39,10 +39,10 @@
 </table>
 
 @code {
-	private List<Player> Players { get; set; } = new();
+	private List<Player> _players = new();
 
 	protected override void OnParametersSet()
 	{
-		Players = PretendDatabase.GetPlayers();
+		_players = PretendDatabase.GetPlayers();
 	}
 }

@@ -16,7 +16,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var server in Servers)
+		@foreach (var server in _servers)
 		{
 			<tr>
 				<td>
@@ -38,10 +38,10 @@
 </table>
 
 @code {
-	private List<Server> Servers { get; set; } = new();
+	private List<Server> _servers = new();
 
 	protected override void OnParametersSet()
 	{
-		Servers = PretendDatabase.GetServers();
+		_servers = PretendDatabase.GetServers();
 	}
 }
