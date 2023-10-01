@@ -60,7 +60,7 @@ public class PretendDatabase
         },
     };
 
-    private static List<string> _eventLog = new();
+    private static List<EventLogEntry> _eventLog = new();
 
     public static void UpsertServer(Server server)
     {
@@ -101,13 +101,13 @@ public class PretendDatabase
         return _players.Select(x => x.Clone()).ToList();
     }
 
-    public static void LogEvent(string eventString)
+    public static void LogEvent(EventLogEntry newEvent)
     {
-        _eventLog.Add(eventString);
+        _eventLog.Add(newEvent);
     }
 
-    public static List<string> GetEventLog()
+    public static List<EventLogEntry> GetEventLogs()
     {
-        return new List<string>(_eventLog);
+        return new List<EventLogEntry>(_eventLog);
     }
 }

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
-using System.Collections;
-
-namespace blazor_dashboard;
+﻿namespace blazor_dashboard;
 
 /// <summary>
 /// Stores a user's state in memory.
@@ -25,16 +21,17 @@ public class SiteState
 
 	public PageState ActivePage { get; set; }
 
+	/// <summary>
+	/// Components can register a callback function that will be called
+	/// when the state changes. This helps them know when to refresh.
+	/// </summary>
 	private List<Action> OnStateChangedActions { get; set; } = new();
 
 	public SiteState()
 	{
 		History = new()
 		{
-			new PageState{
-				PageType = typeof(HomePage),
-				PageParameters = new()
-			}
+			new PageState(typeof(HomePage), "Home")
 		};
 
 		ActivePage = History[0];
@@ -72,15 +69,9 @@ public class SiteState
     /// to the saved version automatically. Optionally accepts parameters if the
     /// page needs them.
     /// </summary>
-    public void SetPage(Type pageType, Dictionary<string, object>? pageParameters = null)
+    public void SetPage(Type pageType, string pageName, Dictionary<string, object>? pageParameters = null)
 	{
-		var pageState = new PageState
-		{
-			PageType = pageType,
-			PageParameters = pageParameters ?? new()
-		};
-
-		SetPage(pageState);
+		SetPage(new PageState(pageType, pageName, pageParameters));
 	}
 
 	/// <summary>
@@ -113,50 +104,4 @@ public class SiteState
 			action.Invoke();
 		}
 	}
-}
-
-/// <summary>
-/// Represents a page and its data at a given point in time.
-/// </summary>
-public class PageState
-{
-	/// <summary>
-	/// The type of the component that represents this page.
-	/// </summary>
-	public Type? PageType { get; set; }
-
-	public Dictionary<string, object>? PageParameters { get; set; }
-
-	public override bool Equals(object? obj)
-	{
-		if (obj == null)
-			return false;
-
-		if (obj is PageState otherPageState)
-		{
-            if (otherPageState.PageType.Name != PageType.Name)
-				return false;
-
-			return PagesHaveSameParameters(PageParameters, otherPageState.PageParameters);
-		}
-
-        return false;
-	}
-
-	private bool PagesHaveSameParameters(Dictionary<string, object> page1Parameters,
-		Dictionary<string, object> page2Parameters)
-	{
-		if (page1Parameters.Keys.Count != page2Parameters.Keys.Count)
-			return false;
-
-		// In reality this doesn't really provide the clever behaviour we're after.
-		// Even if we implement Equals() functions on the relevant types, this is
-		// using the Equals() function on the object type, which just defaults to
-		// the default behaviour. There is a way around this but it's long-winded
-		// and this is not really a priority.
-        return page1Parameters.Keys.All(
-            k => page2Parameters.ContainsKey(k)
-            && page1Parameters[k].Equals(page2Parameters[k])
-        );
-    }
 }

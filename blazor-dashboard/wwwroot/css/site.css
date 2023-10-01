@@ -1,5 +1,5 @@
 * {
-    color: black;
+    color: #373737;
     font-family: 'Noto Sans';
 }
 
@@ -27,10 +27,44 @@ td, th {
 }
 
 th {
-    background-color: rgb(117, 197, 255);
-    color: white;
+    background-color: rgb(128, 202, 255);
+    color: #373737;
+    padding: 1em;
 }
 
 h2 {
     font-size: 1.2em;
+}
+
+/* Unused but might as well keep it here just in case. */
+footer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100vw;
+    max-width: 100%;
+    padding: 1em 0;
+    border-top: solid #00000042 0.1em;
+    font-size: 0.9em;
+    background-color: rgb(46, 165, 255);
+    color: #ebebeb;
+}
+
+button {
+    background-color: rgb(128, 202, 255);
+    font-size: 1em;
+    border-radius: 0.5em;
+    border: solid #0000004d 0.1em;
+    padding: 0.75em 1.5em;
+    box-shadow: 0.1em 0.1em 0.2em 0em #00000059;
+}
+
+button:hover {
+    filter: brightness(110%);
+    cursor: pointer;
+}
+
+button:active {
+    filter: brightness(100%);
+    box-shadow: 0.1em 0.1em 0.2em 0em #00000059 inset;
 }

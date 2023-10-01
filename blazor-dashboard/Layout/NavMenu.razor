@@ -4,23 +4,27 @@
 {
     <div class="navigation">
         <NavItem 
-        PageComponentType="typeof(HomePage)"
-        ChildContent="Home">
+            PageComponentType="typeof(HomePage)"
+            ChildContent="Home">
         </NavItem>
         <NavItem 
-        PageComponentType="typeof(PlayersPage)"
-        ChildContent="Players">
+            PageComponentType="typeof(PlayersPage)"
+            ChildContent="Players">
         </NavItem>
         <NavItem
-        PageComponentType="typeof(ServersPage)"
-        ChildContent="Servers">
+            PageComponentType="typeof(ServersPage)"
+            ChildContent="Servers">
+        </NavItem>
+        <NavItem
+            PageComponentType="typeof(EventLogPage)"
+            ChildContent="Event Log">
         </NavItem>
     </div>
     <div class="history-container">
         @foreach (var historyItem in State.History ?? new())
         {
             <HistoryItem
-                ChildContent="@historyItem.PageType?.Name"
+                ChildContent="@historyItem.PageName"
                 PageStateReference="@historyItem"
                 OnMouseLeave="@(() => ClearPagePreview())"
                 OnMouseOver="@(() => SetPageBeingPreviewed(historyItem))">
@@ -31,11 +35,13 @@
     @if(_pageBeingPreviewed != null && _pageBeingPreviewed != State.ActivePage)
     {
         <div class="history-preview">
-            <div class="history-preview-content">
-                <DynamicComponent 
-                    Type="@_pageBeingPreviewed.PageType"
-                    Parameters="@_pageBeingPreviewed.PageParameters">
-                </DynamicComponent>
+            <div class="history-preview-header">Page Preview</div>
+            <div class="history-preview-wrapper">
+                <div class="history-preview-content">
+                    <DynamicComponent Type="@_pageBeingPreviewed.PageType"
+                                      Parameters="@_pageBeingPreviewed.PageParameters">
+                    </DynamicComponent>
+                </div>
             </div>
         </div>
     }

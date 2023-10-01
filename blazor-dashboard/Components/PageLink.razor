@@ -2,7 +2,7 @@
 
 @if (State != null && PageParameters != null && PageType != null)
 {
-	<a class="page-link" @onclick="() => State.SetPage(PageType, PageParameters)">@ChildContent</a>
+	<a class="page-link" @onclick="() => OnClick()">@ChildContent</a>
 }
 
 @code {
@@ -11,6 +11,9 @@
 
 	[Parameter]
 	public Type? PageType { get; set; }
+
+	[Parameter]
+	public string? PageName { get; set; }
 
 	/// <summary>
 	/// The parameters for this page. It is better to pass in a function that
@@ -22,4 +25,18 @@
 
 	[CascadingParameter]
 	private SiteState? State { get; set; }
+
+	private void OnClick()
+	{
+		if (State == null)
+			return;
+
+		if (PageType == null)
+			throw new Exception("PageType was null on PageLink");
+
+		if (PageName == null)
+			throw new Exception("PageName was null on PageLink");
+
+		State.SetPage(PageType, PageName, PageParameters);
+	}
 }

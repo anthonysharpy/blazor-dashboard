@@ -2,7 +2,7 @@
 
 @if (State != null && PageComponentType != null)
 {
-	<div @onclick="() => State.SetPage(PageComponentType, PageParameters)" class="navigation-item @(State.ActivePage.PageType.Name == PageComponentType.Name ? "active" : "")">
+	<div @onclick="() => OnClick()" class="navigation-item @(State.ActivePage.PageType!.Name == PageComponentType.Name ? "active" : "")">
 		<a>@ChildContent</a>
 	</div>
 }
@@ -15,10 +15,24 @@
 	public Type? PageComponentType { get; set; }
 
 	[Parameter]
-	public Dictionary<string, object> PageParameters { get; set; } = new();
+	public Dictionary<string, object>? PageParameters { get; set; }
 
 	[CascadingParameter]
 	public SiteState? State { get; set; }
+
+	private void OnClick()
+	{
+		if (State == null)
+			return;
+
+		if (PageComponentType == null)
+			throw new Exception("PageComponentType was null on NavItem");
+
+		if (ChildContent == null)
+			throw new Exception("ChildContent was null on NavItem");
+
+		State.SetPage(PageComponentType, ChildContent, PageParameters);
+	}
 
 	protected override void OnParametersSet()
 	{

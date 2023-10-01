@@ -34,6 +34,7 @@
 						<PageLink
 							ChildContent="@player.SteamName"
 							PageType="typeof(PlayerInfoPage)"
+							PageName="Player Info"
 							PageParameters="@(new()
 								{
 									{ "PlayerSteamID", player.SteamID }
@@ -68,5 +69,6 @@
 	{
 		server.Players.Remove(player);
 		PretendDatabase.UpsertServer(server);
+		LoggingHelpers.LogEvent($"User with Steam ID {player.SteamID} was kicked from server with Steam ID {server.SteamID}");
 	}
 }

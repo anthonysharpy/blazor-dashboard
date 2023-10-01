@@ -1,7 +1,7 @@
 .navigation-item {
     padding: 2em;
     text-decoration: none;
-    background-color: rgb(117, 197, 255);
+    background-color: rgb(46, 165, 255);
 }
 
 .navigation-item a {
@@ -12,14 +12,9 @@
 
 .navigation-item:hover {
     cursor: pointer;
-    filter: brightness(105%);
-}
-
-.navigation-item:first-of-type {
+    filter: brightness(90%);
 }
 
 .navigation-item.active {
-    filter: brightness(105%);
-    transform:translate(0, -0.1em);
-    color: rgb(238, 238, 238);
+    filter: brightness(110%);
 }

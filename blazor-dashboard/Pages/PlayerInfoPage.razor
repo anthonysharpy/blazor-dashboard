@@ -28,7 +28,11 @@
 
 	private void BanPlayer()
 	{
+		if (OurPlayer?.IsBanned ?? true)
+			return;
+
 		OurPlayer.IsBanned = true;
 		PretendDatabase.UpsertPlayer(OurPlayer);
+		LoggingHelpers.LogEvent($"User with Steam ID {OurPlayer.SteamID} was banned");
 	}
 }

@@ -1,16 +1,16 @@
 .navigation {
     display: flex;
     flex-direction: row;
-    background-color: rgb(117, 197, 255);
+    background-color: rgb(46, 165, 255);
 }
 
 .history-container {
     display: flex;
     flex-direction: row;
-    border: solid 0.1rem rgb(100, 100, 100);
+    border: solid 0.1rem rgb(100, 100, 100, 0.72);
     border-left: none;
     border-right: none;
-    box-shadow: 0 0.4em 1em -0.4em rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0.4em 1em -0.7em rgba(0, 0, 0, 0.5);
     background-color: white;
 }
 
@@ -19,16 +19,27 @@
     position: fixed;
     background-color: white;
     margin: auto;
-    padding: 1em;
-    width: 40vw;
-    height: 22.5vw;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0.4em 0.4em 0.7em rgba(0, 0, 0, 0.5);
 }
 
+.history-preview-wrapper {
+    width: 40vw;
+    height: 22.5vw;
+}
+
+.history-preview-header {
+    background-color: rgb(220, 220, 220);
+    font-weight: bold;
+    text-align: center;
+    padding: 0.25em;
+    border-bottom: solid black 0.1em;
+}
+
 .history-preview-content {
     zoom: 25%;
     pointer-events: none;
+    padding: 1em;
 }
