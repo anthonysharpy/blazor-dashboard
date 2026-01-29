@@ -1,9 +1,9 @@
 ﻿namespace blazor_dashboard;
 
 /// <summary>
-/// This is definitely not how you would actually set up the database!
+/// This is definitely not how you would actually set up the database.
 /// This is just for pretend, I thought it would be a bit overkill to add
-/// a full database implementation here :-)
+/// a full database implementation here.
 /// 
 /// My personal preference would be to go with Dapper because of its speed and
 /// lesser chances of shooting yourself in the foot, but Entity Framework is

@@ -1,7 +1,14 @@
 # blazor-dashboard
-An example Blazor Server dashboard I wrote.
 
-Note that this doesn't currently have mobile support. I could add it but... I'm probably not going to ;-) As an internal system dashboard it's mainly geared towards PCs anyway. If you want to see an example of a mobile-supported site, check out my portfolio! https://anthonysharpy.dev/
+An example Blazor Server website created over the course of a weekend in September 2023. Designed in the style of an internal dashboard for a gaming company.
+
+## Features
+
+- Single-page website providing fast and responsive experience for increased staff productivity.
+- History bar allows users to easily jump forwards and backwards in time - useful for cross-referencing multiple pages.
+- Page preview feature on hover.
+- Data is refetched on component load; no confusingly stale data.
+- Event logs track actions taken within in the dashboard.
 
 ## How To Run
 

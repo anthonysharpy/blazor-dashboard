@@ -92,8 +92,7 @@ public class SiteState
 	}
 
 	/// <summary>
-	/// Force subscribers to re-render as the state has changed. Couldn't find any
-	/// any better way of doing this.
+	/// Force subscribers to re-render as the state has changed.
 	/// </summary>
 	private void StateHasChanged()
 	{
