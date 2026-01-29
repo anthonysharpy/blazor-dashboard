@@ -2,6 +2,8 @@
 
 An example Blazor Server website created over the course of a weekend in September 2023. Designed in the style of an internal dashboard for a gaming company.
 
+![](https://anthonysharpy.dev/videos/blazor_site_1.mp4)
+
 ## Features
 
 - Single-page website providing fast and responsive experience for increased staff productivity.
